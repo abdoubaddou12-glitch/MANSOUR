@@ -6,6 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>مدونتي الحديثة | My Modern Blog</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      // تفعيل وضع الفئة لـ Tailwind ليتمكن من قراءة class="dark" من عنصر html
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['IBM Plex Sans Arabic', 'sans-serif'],
+            },
+          },
+        },
+      }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -18,7 +31,7 @@
       #root {
         min-height: 100vh;
       }
-      /* Smooth transitions for dark mode */
+      /* انتقال سلس للألوان عند تبديل الوضع */
       .transition-colors {
         transition-property: background-color, border-color, color, fill, stroke;
         transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
