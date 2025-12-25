@@ -1,0 +1,7 @@
+{
+  "name": "Modern Arabic Blog System",
+  "description": "A high-performance, modern blog engine featuring a sleek reading interface and a secure administrative dashboard, optimized for Vercel deployment.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
