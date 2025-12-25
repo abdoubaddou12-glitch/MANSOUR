@@ -7,9 +7,10 @@ import { generateBlogDraft } from '../services/gemini';
 interface EditorProps {
   posts?: Post[];
   onSave: (post: Post) => void;
+  isDarkMode?: boolean;
 }
 
-const Editor: React.FC<EditorProps> = ({ posts, onSave }) => {
+const Editor: React.FC<EditorProps> = ({ posts, onSave, isDarkMode }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const isEditing = !!id;

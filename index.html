@@ -7,8 +7,8 @@
     <title>مدونتي الحديثة | My Modern Blog</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      // تفعيل وضع الفئة لـ Tailwind ليتمكن من قراءة class="dark" من عنصر html
-      tailwind.config = {
+      // إعداد Tailwind للتعرف على كلاس 'dark' يدوياً
+      window.tailwind.config = {
         darkMode: 'class',
         theme: {
           extend: {
@@ -31,11 +31,10 @@
       #root {
         min-height: 100vh;
       }
-      /* انتقال سلس للألوان عند تبديل الوضع */
-      .transition-colors {
-        transition-property: background-color, border-color, color, fill, stroke;
-        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      /* انتقال سلس عند التبديل */
+      .transition-all {
         transition-duration: 300ms;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
       }
     </style>
     <script type="importmap">
@@ -53,7 +52,7 @@
 }
 </script>
   </head>
-  <body class="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors">
+  <body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors">
     <div id="root"></div>
     <script type="module" src="index.tsx"></script>
   </body>

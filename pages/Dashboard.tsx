@@ -8,9 +8,11 @@ interface DashboardProps {
   posts: Post[];
   onDelete: (id: string) => void;
   onLogout: () => void;
+  isDarkMode: boolean;
+  toggleDarkMode: () => void;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ posts, onDelete, onLogout }) => {
+const Dashboard: React.FC<DashboardProps> = ({ posts, onDelete, onLogout, isDarkMode, toggleDarkMode }) => {
   const chartData = [
     { name: 'يناير', views: 400 },
     { name: 'فبراير', views: 300 },
@@ -23,7 +25,7 @@ const Dashboard: React.FC<DashboardProps> = ({ posts, onDelete, onLogout }) => {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex transition-colors">
       {/* Sidebar */}
       <aside className="w-64 bg-gray-900 dark:bg-black text-white hidden lg:flex flex-col border-l border-gray-800 transition-colors">
-        <div className="p-8 border-b border-gray-800">
+        <div className="p-8 border-b border-gray-800 flex justify-between items-center">
           <h1 className="text-xl font-bold tracking-tight">لوحة التحكم</h1>
         </div>
         <nav className="flex-grow p-4 space-y-2 mt-4">
@@ -33,6 +35,12 @@ const Dashboard: React.FC<DashboardProps> = ({ posts, onDelete, onLogout }) => {
           <Link to="/" className="flex items-center gap-3 p-3 text-gray-400 hover:text-white transition">
              <span>مشاهدة الموقع</span>
           </Link>
+          <button 
+            onClick={toggleDarkMode}
+            className="w-full flex items-center gap-3 p-3 text-gray-400 hover:text-white transition"
+          >
+            <span>{isDarkMode ? 'الوضع النهاري 🌞' : 'الوضع الليلي 🌙'}</span>
+          </button>
         </nav>
         <div className="p-4 border-t border-gray-800">
           <button 
@@ -60,7 +68,6 @@ const Dashboard: React.FC<DashboardProps> = ({ posts, onDelete, onLogout }) => {
             </Link>
           </header>
 
-          {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
             <div className="bg-white dark:bg-gray-900 p-6 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800 transition-colors">
               <span className="text-sm text-gray-400 dark:text-gray-500 font-medium">إجمالي المقالات</span>
@@ -81,10 +88,13 @@ const Dashboard: React.FC<DashboardProps> = ({ posts, onDelete, onLogout }) => {
             <div className="h-64 w-full">
                <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={chartData}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={window.matchMedia('(prefers-color-scheme: dark)').matches ? '#1f2937' : '#f0f0f0'} />
-                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fontSize: 12, fill: '#9ca3af'}} />
-                  <YAxis axisLine={false} tickLine={false} tick={{fontSize: 12, fill: '#9ca3af'}} />
-                  <Tooltip cursor={{fill: 'transparent'}} contentStyle={{borderRadius: '12px', border: 'none', backgroundColor: '#111827', color: '#fff'}} />
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={isDarkMode ? '#374151' : '#f0f0f0'} />
+                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fontSize: 12, fill: isDarkMode ? '#9ca3af' : '#6b7280'}} />
+                  <YAxis axisLine={false} tickLine={false} tick={{fontSize: 12, fill: isDarkMode ? '#9ca3af' : '#6b7280'}} />
+                  <Tooltip 
+                    cursor={{fill: 'transparent'}} 
+                    contentStyle={{borderRadius: '12px', border: 'none', backgroundColor: isDarkMode ? '#1f2937' : '#fff', color: isDarkMode ? '#fff' : '#000'}} 
+                  />
                   <Bar dataKey="views" fill="#4f46e5" radius={[6, 6, 0, 0]} barSize={40} />
                 </BarChart>
               </ResponsiveContainer>
