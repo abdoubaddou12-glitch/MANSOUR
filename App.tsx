@@ -32,6 +32,21 @@ const App: React.FC = () => {
     }
   });
 
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
+    return localStorage.getItem('theme') === 'dark' || 
+      (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  });
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [isDarkMode]);
+
   useEffect(() => {
     try {
       localStorage.setItem('blog_posts', JSON.stringify(posts));
@@ -39,6 +54,8 @@ const App: React.FC = () => {
       console.error("Error saving posts to localStorage:", e);
     }
   }, [posts]);
+
+  const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
 
   const addPost = (post: Post) => {
     setPosts(prev => [post, ...prev]);
@@ -70,13 +87,13 @@ const App: React.FC = () => {
 
   return (
     <Router>
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col bg-white dark:bg-gray-950 transition-colors duration-300">
         <Routes>
-          <Route path="/" element={<Home posts={posts} />} />
-          <Route path="/post/:id" element={<PostView posts={posts} />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/" element={<Home posts={posts} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />} />
+          <Route path="/post/:id" element={<PostView posts={posts} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />} />
+          <Route path="/about" element={<About isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />} />
           <Route path="/login" element={
-            isAuthenticated ? <Navigate to="/admin" /> : <Login onLogin={handleLogin} />
+            isAuthenticated ? <Navigate to="/admin" /> : <Login onLogin={handleLogin} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
           } />
 
           <Route path="/admin" element={
