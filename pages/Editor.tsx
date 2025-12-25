@@ -56,24 +56,24 @@ const Editor: React.FC<EditorProps> = ({ posts, onSave }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 py-12 px-4 transition-colors">
       <div className="max-w-4xl mx-auto">
         <header className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
             {isEditing ? 'تعديل المقال' : 'إضافة مقال جديد'}
           </h1>
-          <Link to="/admin" className="text-gray-500 hover:text-gray-900 transition font-medium">إلغاء والعودة</Link>
+          <Link to="/admin" className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition font-medium">إلغاء والعودة</Link>
         </header>
 
         <form onSubmit={handleSubmit} className="space-y-8">
-          <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 space-y-6">
+          <div className="bg-white dark:bg-gray-900 p-8 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800 space-y-6 transition-colors">
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">عنوان المقال</label>
+              <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">عنوان المقال</label>
               <input 
                 type="text" 
                 value={formData.title}
                 onChange={(e) => setFormData({...formData, title: e.target.value})}
-                className="w-full px-5 py-3 bg-gray-50 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-indigo-500 transition text-lg font-bold"
+                className="w-full px-5 py-3 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 outline-none focus:ring-2 focus:ring-indigo-500 transition text-lg font-bold text-gray-900 dark:text-white"
                 placeholder="أدخل عنواناً جذاباً..."
                 required
               />
@@ -81,11 +81,11 @@ const Editor: React.FC<EditorProps> = ({ posts, onSave }) => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">التصنيف</label>
+                <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">التصنيف</label>
                 <select 
                   value={formData.category}
                   onChange={(e) => setFormData({...formData, category: e.target.value})}
-                  className="w-full px-5 py-3 bg-gray-50 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-indigo-500 transition appearance-none"
+                  className="w-full px-5 py-3 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 outline-none focus:ring-2 focus:ring-indigo-500 transition appearance-none text-gray-900 dark:text-white"
                 >
                   <option value="تقنية">تقنية</option>
                   <option value="تصميم">تصميم</option>
@@ -94,36 +94,36 @@ const Editor: React.FC<EditorProps> = ({ posts, onSave }) => {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">رابط الصورة</label>
+                <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">رابط الصورة</label>
                 <input 
                   type="text" 
                   value={formData.image}
                   onChange={(e) => setFormData({...formData, image: e.target.value})}
-                  className="w-full px-5 py-3 bg-gray-50 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                  className="w-full px-5 py-3 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 outline-none focus:ring-2 focus:ring-indigo-500 transition text-gray-900 dark:text-white"
                   placeholder="https://..."
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">المقتطف (Excerpt)</label>
+              <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">المقتطف (Excerpt)</label>
               <textarea 
                 rows={2}
                 value={formData.excerpt}
                 onChange={(e) => setFormData({...formData, excerpt: e.target.value})}
-                className="w-full px-5 py-3 bg-gray-50 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                className="w-full px-5 py-3 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 outline-none focus:ring-2 focus:ring-indigo-500 transition text-gray-900 dark:text-white"
                 placeholder="وصف مختصر يظهر في قائمة المقالات..."
               />
             </div>
 
             <div>
               <div className="flex justify-between items-center mb-2">
-                <label className="block text-sm font-bold text-gray-700">محتوى المقال</label>
+                <label className="block text-sm font-bold text-gray-700 dark:text-gray-300">محتوى المقال</label>
                 <button 
                   type="button"
                   onClick={handleGenerateAI}
                   disabled={isGenerating}
-                  className="text-xs bg-indigo-50 text-indigo-600 px-3 py-1.5 rounded-lg font-bold hover:bg-indigo-100 transition flex items-center gap-1"
+                  className="text-xs bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 px-3 py-1.5 rounded-lg font-bold hover:bg-indigo-100 dark:hover:bg-indigo-900/50 transition flex items-center gap-1"
                 >
                   {isGenerating ? 'جاري التوليد...' : '✨ استعن بالذكاء الاصطناعي'}
                 </button>
@@ -132,7 +132,7 @@ const Editor: React.FC<EditorProps> = ({ posts, onSave }) => {
                 rows={12}
                 value={formData.content}
                 onChange={(e) => setFormData({...formData, content: e.target.value})}
-                className="w-full px-5 py-3 bg-gray-50 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-indigo-500 transition font-serif leading-relaxed"
+                className="w-full px-5 py-3 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 outline-none focus:ring-2 focus:ring-indigo-500 transition font-serif leading-relaxed text-gray-900 dark:text-white"
                 placeholder="اكتب قصتك هنا..."
                 required
               />
@@ -142,7 +142,7 @@ const Editor: React.FC<EditorProps> = ({ posts, onSave }) => {
           <div className="flex justify-end gap-4">
             <button 
               type="submit"
-              className="bg-gray-900 text-white px-10 py-4 rounded-2xl font-bold shadow-xl hover:bg-gray-800 transition transform hover:-translate-y-1"
+              className="bg-gray-900 dark:bg-indigo-600 text-white px-10 py-4 rounded-2xl font-bold shadow-xl hover:bg-gray-800 dark:hover:bg-indigo-700 transition transform hover:-translate-y-1"
             >
               {isEditing ? 'حفظ التعديلات' : 'نشر المقال'}
             </button>
