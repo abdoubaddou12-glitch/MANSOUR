@@ -12,16 +12,32 @@ import { INITIAL_POSTS } from './constants';
 
 const App: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>(() => {
-    const saved = localStorage.getItem('blog_posts');
-    return saved ? JSON.parse(saved) : INITIAL_POSTS;
+    try {
+      const saved = localStorage.getItem('blog_posts');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch (e) {
+      console.error("Error loading posts from localStorage:", e);
+    }
+    return INITIAL_POSTS;
   });
 
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
-    return localStorage.getItem('is_admin') === 'true';
+    try {
+      return localStorage.getItem('is_admin') === 'true';
+    } catch (e) {
+      return false;
+    }
   });
 
   useEffect(() => {
-    localStorage.setItem('blog_posts', JSON.stringify(posts));
+    try {
+      localStorage.setItem('blog_posts', JSON.stringify(posts));
+    } catch (e) {
+      console.error("Error saving posts to localStorage:", e);
+    }
   }, [posts]);
 
   const addPost = (post: Post) => {
@@ -40,19 +56,22 @@ const App: React.FC = () => {
 
   const handleLogin = (status: boolean) => {
     setIsAuthenticated(status);
-    localStorage.setItem('is_admin', status.toString());
+    try {
+      localStorage.setItem('is_admin', status.toString());
+    } catch (e) {}
   };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
-    localStorage.removeItem('is_admin');
+    try {
+      localStorage.removeItem('is_admin');
+    } catch (e) {}
   };
 
   return (
     <Router>
       <div className="min-h-screen flex flex-col">
         <Routes>
-          {/* Public Routes */}
           <Route path="/" element={<Home posts={posts} />} />
           <Route path="/post/:id" element={<PostView posts={posts} />} />
           <Route path="/about" element={<About />} />
@@ -60,7 +79,6 @@ const App: React.FC = () => {
             isAuthenticated ? <Navigate to="/admin" /> : <Login onLogin={handleLogin} />
           } />
 
-          {/* Protected Admin Routes */}
           <Route path="/admin" element={
             isAuthenticated ? <Dashboard posts={posts} onDelete={deletePost} onLogout={handleLogout} /> : <Navigate to="/login" />
           } />
@@ -70,6 +88,8 @@ const App: React.FC = () => {
           <Route path="/admin/edit/:id" element={
             isAuthenticated ? <Editor posts={posts} onSave={updatePost} /> : <Navigate to="/login" />
           } />
+          
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
     </Router>
