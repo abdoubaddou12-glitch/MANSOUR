@@ -30,17 +30,16 @@ const App: React.FC = () => {
     return window.matchMedia('(prefers-color-scheme: dark)').matches;
   });
 
-  // Apply theme to HTML element for Tailwind 'class' strategy
+  // تحديث كلاس html عند تغيير الحالة
   useEffect(() => {
     const root = window.document.documentElement;
     if (isDarkMode) {
       root.classList.add('dark');
-      root.classList.remove('light');
+      localStorage.setItem('theme', 'dark');
     } else {
-      root.classList.add('light');
       root.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
     }
-    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
   }, [isDarkMode]);
 
   useEffect(() => {

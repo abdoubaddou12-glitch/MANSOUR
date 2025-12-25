@@ -7,7 +7,7 @@
     <title>مدونة المستقبل | Future Blog</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      // Crucial: This must be set before any components render
+      // تهيئة Tailwind لاستخدام استراتيجية الفئة (class) للوضع الليلي
       tailwind.config = {
         darkMode: 'class',
         theme: {
@@ -51,14 +51,14 @@
       #root {
         min-height: 100vh;
       }
-      /* Transitions for theme switching */
+      /* انتقال سلس للألوان عند تبديل الوضع */
       .theme-transition {
         transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
         transition-duration: 400ms;
         transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
       }
       
-      /* Glassmorphism utility */
+      /* تأثير الزجاج */
       .glass {
         background: rgba(255, 255, 255, 0.7);
         backdrop-filter: blur(12px);
