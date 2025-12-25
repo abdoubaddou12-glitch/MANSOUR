@@ -1,20 +1,39 @@
 
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>مدونتي الحديثة | My Modern Blog</title>
+    <title>مدونة المستقبل | Future Blog</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      // إعداد Tailwind للتعرف على كلاس 'dark' يدوياً
-      window.tailwind.config = {
+      // Crucial: This must be set before any components render
+      tailwind.config = {
         darkMode: 'class',
         theme: {
           extend: {
+            colors: {
+              primary: {
+                50: '#f5f3ff',
+                100: '#ede9fe',
+                200: '#ddd6fe',
+                300: '#c4b5fd',
+                400: '#a78bfa',
+                500: '#8b5cf6',
+                600: '#7c3aed',
+                700: '#6d28d9',
+                800: '#5b21b6',
+                900: '#4c1d95',
+                950: '#2e1065',
+              },
+            },
             fontFamily: {
               sans: ['IBM Plex Sans Arabic', 'sans-serif'],
             },
+            borderRadius: {
+              '4xl': '2rem',
+              '5xl': '3rem',
+            }
           },
         },
       }
@@ -27,14 +46,26 @@
         font-family: 'IBM Plex Sans Arabic', sans-serif;
         margin: 0;
         padding: 0;
+        overflow-x: hidden;
       }
       #root {
         min-height: 100vh;
       }
-      /* انتقال سلس عند التبديل */
-      .transition-all {
-        transition-duration: 300ms;
+      /* Transitions for theme switching */
+      .theme-transition {
+        transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+        transition-duration: 400ms;
         transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      
+      /* Glassmorphism utility */
+      .glass {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+      .dark .glass {
+        background: rgba(15, 23, 42, 0.7);
       }
     </style>
     <script type="importmap">
@@ -52,7 +83,7 @@
 }
 </script>
   </head>
-  <body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors">
+  <body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 theme-transition">
     <div id="root"></div>
     <script type="module" src="index.tsx"></script>
   </body>

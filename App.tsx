@@ -30,16 +30,17 @@ const App: React.FC = () => {
     return window.matchMedia('(prefers-color-scheme: dark)').matches;
   });
 
-  // تأثير تبديل الثيم على مستوى الوثيقة بالكامل
+  // Apply theme to HTML element for Tailwind 'class' strategy
   useEffect(() => {
     const root = window.document.documentElement;
     if (isDarkMode) {
       root.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
+      root.classList.remove('light');
     } else {
+      root.classList.add('light');
       root.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
     }
+    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
   }, [isDarkMode]);
 
   useEffect(() => {
@@ -68,7 +69,7 @@ const App: React.FC = () => {
 
   return (
     <Router>
-      <div className="min-h-screen transition-colors duration-300">
+      <div className="min-h-screen theme-transition">
         <Routes>
           <Route path="/" element={<Home posts={posts} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />} />
           <Route path="/post/:id" element={<PostView posts={posts} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />} />
